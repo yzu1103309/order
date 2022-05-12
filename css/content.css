@@ -1,0 +1,205 @@
+body, html{
+    cursor:url(../pics/cursor.png),auto;
+  }
+.options{
+    width: 900px;
+    height: 250px;
+    margin: 200px auto;
+}
+.opt-btn{
+    margin: 10 auto;
+    background-color: #E67E22;
+    width:200px;
+    height: 35px;
+    color: white;
+    border: solid white 0px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor:url(../pics/pointer.png),auto;
+}
+#photo1,#photo2,#photo3,#photo4{
+    cursor:url(../pics/pointer.png),auto;
+    width: 200px;
+}
+
+.btn{
+    background-color: #E67E22;
+    width:150px;
+    height: 40px;
+    color: white;
+    border: solid white 0px;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor:url(../pics/pointer.png),auto;
+    float: left ;
+}
+#type{
+    padding-left: 10px;
+    padding-top: 20px;
+    margin-bottom: 30px;
+}
+.textbox{
+    height: 35px;
+    width: 150px;
+    border: 3px solid black;
+    border-radius: 10px;
+    font-size: 23px;
+    font-weight: bold;
+    text-align: center;
+    cursor: url(../pics/pointer.png), auto;
+}   
+#number2{
+    text-align: center;
+    font-weight: bold;
+    font-size: 23px;
+    margin-bottom: 15px;
+    background-color: #935116;
+    color: white;
+    padding: 10px;
+}
+#menu{
+    margin-left: 30px;
+    padding-top: 30px;
+    max-width: calc(100% - 465px);
+}
+.box{
+    height: 50px;
+    width: 180px;
+    background: #EB984E;
+    border: solid white 0px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    padding-top: 10px;
+    color: #713500;
+    display: inline-block;
+    margin-right: 20px;
+    cursor: url(../pics/pointer.png), auto;
+    margin-bottom: 10px;
+}
+#section{
+    height: auto;
+    margin-top: 20px;
+}
+#orderList{
+    float: right;
+    width: 450px;
+    min-height: calc(100% - 110px);
+    height: inherit;
+    border-left: solid grey 3px;
+    padding-left: 10px;
+}
+table{
+    border-collapse: collapse;
+}
+tr{
+    font-size: 25px;
+    font-weight: bold;
+
+}
+.td1{
+    width: 300;
+    padding-left: 40px;
+    border-bottom: dashed grey 3px;
+}
+.td2{
+    width: 100px;
+    text-align: center;
+    border-bottom: dashed grey 3px;
+}
+.picBtn{
+    height: 25px;
+    cursor: url(../pics/pointer.png), auto;
+    margin-right: 15px;
+}
+.listB{
+    width: 400px; 
+    height: 600px;
+    background-color: white;
+    border: solid 2px black;
+    display: inline-block;
+    border-radius: 20px;
+    margin-left: 50px;
+    margin-top: 50px;
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.7);
+    position: relative;
+}
+.type1{
+    width: 100px;
+    height: 45px; 
+    background-color: #2ECC71; 
+    margin-top: 20px; 
+    margin-left: 80px; 
+    border: solid white 0px;
+    border-radius: 10px; 
+    color: white; 
+    font-weight: bold; 
+    font-size: 30px;
+    text-align: center;
+    padding-top: 3px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.type2{
+    width: 100px;
+    height: 45px; 
+    background-color: #3498DB; 
+    margin-top: 20px; 
+    margin-left: 80px; 
+    border: solid white 0px;
+    border-radius: 10px; 
+    color: white; 
+    font-weight: bold; 
+    font-size: 30px;
+    text-align: center;
+    padding-top: 3px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.numB{
+    display: inline-block;
+    width: 150px;
+    height: 45px;
+    text-align: center;
+    font-weight: bold; 
+    font-size: 30px;
+}
+
+.history-table{
+    width: 900px;
+    margin:20px 0px;
+}
+.history-table tr td{
+    text-align: center;
+    padding: 15px 0;
+    border-bottom: 2px dashed black;
+}
+.history-type1{
+    width: 100px;
+    height: 40px; 
+    background-color: #2ECC71; 
+    border: solid white 0px;
+    border-radius: 10px; 
+    color: white; 
+    font-weight: bold; 
+    font-size: 25px;
+    text-align: center;
+    padding-top: 2px;
+    display: inline-block;
+}
+.history-type2{
+    width: 100px;
+    height: 40px; 
+    background-color: #3498DB; 
+    border: solid white 0px;
+    border-radius: 10px; 
+    color: white; 
+    font-weight: bold; 
+    font-size: 25px;
+    text-align: center;
+    padding-top: 2px;
+    display: inline-block;
+}

@@ -1,0 +1,47 @@
+body{
+    cursor:url(../pics/cursor.png),auto;
+}
+#box1{
+    height: 60px;
+    background-color: #E67E22;
+    width: 400px;
+    text-align: center;
+    margin-left: 100px;
+    margin-top: 50px;
+    color: white;
+    border: solid white 0px;
+    border-radius: 20px;
+    padding-top:10px;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+#box2{
+    margin-left: 150px;
+}
+p{
+    font-size: 25px;
+    font-weight: bold;
+}
+#titleText{
+    margin-top: 0px;
+}
+.btn{
+    width: 150px;
+    height: 40px;
+    background-color: #E67E22;
+    text-align: center;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    border: solid black 2px;
+    border-radius: 10px;
+    margin-left: 50px;
+    cursor:url(../pics/pointer.png),auto;
+    display: inline-block;
+}
+#instruct{
+    border: solid black 2px;
+    border-radius: 10px;
+    margin-left: 70px;
+}

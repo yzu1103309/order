@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/tutor.css">
+        <link rel="stylesheet" type="text/css" href="css/banner.css">
+        <link rel="icon" href="pics/favicon.png">
+        <script>
+            function Entrance(){
+                var check = window.open('./system.html', '_blank', 'toolbar=0,location=0,menubar=0,resizable=0,height='+screen.height+',width='+screen.width);
+                console.log('check',check);
+                // if(check != null)
+                // {
+                //     window.open('', '_self', '').close();
+                // }
+            }
+        </script>
+        <title>系統入口</title>
+    </head>
+    <body onload="Entrance()">
+        <div id="banner">
+            <a href="./" id="title"> 
+                <img src="pics/logo.png" id="logo">
+                <h1 id="titleText">點餐管理系統 / 啟動器</h1>
+            </a>
+        </div>
+        <div id="content">
+            <div id="box1">使用此系統注意事項</div>
+            <div id="box2">
+                <p>1. 如未正常啟動，請允許彈出視窗（右上角），並重新整理。</p>
+                <img id="instruct" src="./pics/instruct.png">
+                <p>2. 如無法正常彈出視窗，按下啟動鍵也可啟動系統。</p>
+                <p>3. 如欲離開，關閉此視窗即可。</p>
+                <p>
+                    <div class="btn"><a href="javascript:Entrance()" style="text-decoration: none; color: white; cursor:url(./pics/pointer.png),auto;">啟動系統</a></div>
+                    <div class="btn"><a href="close.html" style="text-decoration: none; color: white; cursor:url(./pics/pointer.png),auto;">離開系統</a></div>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

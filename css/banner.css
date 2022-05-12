@@ -1,0 +1,22 @@
+#banner{
+    height: 100px;
+    background-color: #EB984E ;
+    margin-bottom: 10px;
+    padding-left: 50px;
+}
+#logo{
+    height: 80px;
+    width: 80px;
+    margin-top: 10px;
+    float: left;
+    padding-right: 30px;
+    cursor:url(../pics/pointer.png),auto;
+}
+#title{
+    font-size: 32px;
+    padding-top: 12px;
+    color: #713500;
+    text-decoration: none;
+    font-weight: bold;
+    cursor:url(../pics/pointer.png),auto;
+}

@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>點餐管理系統</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/content.css">
+        <link rel="stylesheet" type="text/css" href="css/banner.css">
+        <link rel="icon" href="pics/favicon.png">        
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/custom_settings.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/order.js"></script>
+    </head>
+    <body>
+        <div id="notify"></div>
+        <div id="banner">
+            <a href="system.html" id="title"> 
+                <img src="pics/logo.png" id="logo">
+                <h1 id="titleText">點餐管理系統</h1>
+            </a>
+        </div>
+        <div id="content">
+            <div class="options">
+                <label for="order">
+                    <img src="pics/order.png" id="photo1" style="padding: 0 10px;">
+                </label>
+                <label for="take">
+                    <img src="pics/take.png" id="photo2" style="padding: 0 10px;">
+                </label>
+                <label for="deliver">
+                    <img src="pics/deliver.png" id="photo3" style="padding: 0 10px;">
+                </label>
+                <label for="history">
+                    <img src="pics/history.png" id="photo4" style="padding: 0 10px;">
+                </label>
+                <input name="order" id="order" type="button" value ="點餐人員" onclick="orderPage()" class="opt-btn" style="margin:0 10px;">
+                <input name="take" id="take" type="button" value ="接單人員" onclick="autoRefresh01()" class="opt-btn" style="margin:0 10px;">
+                <input name="deliver" id="deliver" type="button" value ="送餐人員" onclick="autoRefresh02()" class="opt-btn" style="margin:0 10px;">
+                <input name="history" id="history" type="button" value ="歷史訂單" onclick="historyPage()" class="opt-btn" style="margin:0 10px;">
+            </div>
+        </div>
+        <div id="confirmB" style="box-shadow: 12px 12px 7px rgba(0, 0, 0, 0.7); display: none; width: 400px; height: 600px; position: absolute; left: calc(50% - 200px); top: 200px; background-color: white; border: solid black 3px; border-radius: 20px;">
+            <h1 style="margin-left:20px;">請確認餐點並收費：</h1>
+            <div style="height: 420px; overflow-y: scroll;">
+            <table id="confirmList">                
+            </table>
+            <h1 id="totalSec" style="text-align: right; padding-right: 20px; font-size: 28px;"><span id="totalW2">總計：NT$ </span><span id="total2"></span></h1>
+            </div>
+            <h1 style="font-size: 28px; position: absolute; bottom: 10px; ">
+                <input id="back" name="back" type="button" value="返回上步" class="btn" onclick="back()" style="margin-left: 32px;">
+                <input id="send" name="send" type="button" value="送出本單" class="btn" onclick="send()" style="margin-left: 32px;">
+            </h1>
+        </div>
+        <div id="detailB" style="box-shadow: 12px 12px 7px rgba(0, 0, 0, 0.7); display: none; width: 400px; height: 600px; position: absolute; left: calc(50% - 200px); top: 200px; background-color: white; border: solid black 3px; border-radius: 20px;">
+            <h1 style="margin-left:20px;">此歷史訂單詳情：</h1>
+            <div style="height: 420px; overflow-y: scroll;">
+            <table id="detailedList">                
+            </table>
+            </div>
+            <h1 style="font-size: 28px; position: absolute; bottom: 10px; ">
+                <input id="back02" name="back02" type="button" value="返回上步" class="btn" onclick="back02()" style="margin-left: 32px;">
+                <input id="remove" name="remove" type="button" value="刪除紀錄" class="btn" onclick="remove()" style="margin-left: 32px; background-color: #FF0000;">
+            </h1>
+            </div>
+    </body>
+</html>
