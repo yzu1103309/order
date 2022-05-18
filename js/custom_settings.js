@@ -1,4 +1,3 @@
-
 /* ------------------- 基本自訂化設定頁 -------------------- */
 /* --------- Basic customized settings of system--------- */
 
@@ -16,11 +15,14 @@ const price/* 按照items順序排列 */ = [
     70, 60, 25, 30
 ];
 
-const itemCount/*品項總數*/ = 18; 
 const typeCount/*商品類別總數*/ = 4;
 const eachTypeCount/*各類別包含品項數量*/ = [5,5,4,4]; 
 
-const tableCount = 15;
+const tableCount/*內用桌總數*/ = 15;
 
 const soundFileName1/*<接單頁面>新訂單通知音效*/ = "notify2.mp3";
 const soundFileName2/*<送餐頁面>新訂單通知音效*/ = "notify3.mp3";
+
+
+
+

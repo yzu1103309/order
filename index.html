@@ -9,10 +9,10 @@
             function Entrance(){
                 var check = window.open('./system.html', '_blank', 'toolbar=0,location=0,menubar=0,resizable=0,height='+screen.height+',width='+screen.width);
                 console.log('check',check);
-                // if(check != null)
-                // {
-                //     window.open('', '_self', '').close();
-                // }
+            }
+            function read(){
+                var check = window.open('./README.html', '_blank', 'toolbar=0,location=0,menubar=0,resizable=0,height='+screen.height+',width='+screen.width);
+                console.log('check',check);
             }
         </script>
         <title>系統入口</title>
@@ -33,7 +33,8 @@
                 <p>3. 如欲離開，關閉此視窗即可。</p>
                 <p>
                     <div class="btn"><a href="javascript:Entrance()" style="text-decoration: none; color: white; cursor:url(./pics/pointer.png),auto;">啟動系統</a></div>
-                    <div class="btn"><a href="close.html" style="text-decoration: none; color: white; cursor:url(./pics/pointer.png),auto;">離開系統</a></div>
+                    <div class="btn"><a href="javascript:read()" style="text-decoration: none; color: white; cursor:url(./pics/pointer.png),auto;">特色說明</a></div>
+                    <div class="btn"><a href="./manual.pdf" style="text-decoration: none; color: white; cursor:url(./pics/pointer.png),auto;">下載說明書</a></div>
                 </p>
             </div>
         </div>

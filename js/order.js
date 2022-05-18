@@ -1,6 +1,6 @@
 var originD = Array(itemCount).fill(0);
 var dish = Array(itemCount).fill(0);
-
+var itemCount = items.length;
 var btn = '<input id="confirm" name="confirm" type="button" value="確認送單" class="btn" onclick="sendConfirm()" style="float: right; margin-right: 20px;">';
 var total = 0;
 

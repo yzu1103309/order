@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>點餐管理系統</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/content.css">
+        <link rel="stylesheet" type="text/css" href="css/banner.css">
+        <link rel="icon" href="pics/favicon.png">        
+        <script src="js/jquery-2.1.4.min.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+    <body>
+        
+        <div id="banner">
+            <a href="index.html" id="title">
+                <img src="pics/logo.png" id="logo">
+                <h1 style="padding-top: 3px;">點餐管理系統</h1>
+            </a>
+        </div>
+
+        
+        <div id="content" style="filter: blur(5px);
+        -webkit-filter: blur(2px);">
+            <div id="orderList">
+                <h1 style="margin-left:20px;">Order List</h1>
+
+                <div id="number2">
+                    外帶編號：
+                    <input type="text" class="textbox" value="24" readonly>
+                </div>
+                <table>
+                    <tr>
+                        <td class="td1"><img src="./pics/minus.png" class="picBtn"><img src="./pics/add.png" class="picBtn">紅燒牛肉麵</td><td class="td2">*2</td>
+                    </tr>
+                    <tr style="background-color: #F0B27A;">
+                        <td class="td1"><img src="./pics/minus.png" class="picBtn"><img src="./pics/add.png" class="picBtn">牛肉湯餃</td><td class="td2">*3</td>
+                    </tr>
+                </table>
+                <h1 style="float: right; font-size: 28px;">總計：NT$<span id="total">100</span>
+                    <span id="sendBtn">
+                        <input id="send" name="send" type="button" value="確認送單" class="btn" onclick="send()" style="float: right; margin-right: 30px; margin-left: 40px;">
+                    </span>
+                </h1>
+            </div>
+            <div id="left">
+            <div id="type">
+                <input id="dineIn" name="dineIn" type="button" class="btn" value="內用" onclick="dineIn()">
+                <input id="toGo" name="toGo" type="button" class="btn" value="外帶" onclick="toGo()" style="margin-left: 30px;">
+            </div>
+            <div id="menu">
+                <div id="noodles">
+                    <div class="box">紅燒牛肉麵</div>
+                    <div class="box">清燉牛肉麵</div>
+                    <div class="box">牛肉湯餃</div>
+                    <div class="box">榨菜肉絲麵</div>
+                </div>
+                <div id="rice">
+                    <div class="box">滷肉飯（大）</div>
+                    <div class="box">滷肉飯（小）</div>
+                    <div class="box">爌肉飯</div>
+                    <div class="box">爌肉飯便當</div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div id="confirmB" style="width: 400px; min-height: 600px; height: max-content; position: absolute; left: calc(50% - 250px); top: 200px; background-color: white; border: solid grey 3px; border-radius: 20px;">
+            <h1 style="margin-left:20px;">請確認餐點並收費：</h1>
+            <table>
+                <tr>
+                    <td class="td1">紅燒牛肉麵</td><td class="td2">*2</td>
+                </tr>
+                <tr>
+                    <td class="td1">牛肉湯餃</td><td class="td2">*3</td>
+                </tr>                
+            </table>
+            <h1 id="totalSec" style="text-align: right; padding-right: 20px; font-size: 28px;"><span id="totalW">總計：NT$ </span><span id="total">100</span></h1>
+            <h1 style="font-size: 28px; position: absolute; bottom: 10px; ">
+                <input id="send" name="send" type="button" value="返回上步" class="btn" onclick="confirm()" style="margin-left: 32px;">
+                <input id="send" name="send" type="button" value="收費完成" class="btn" onclick="confirm()" style="margin-left: 32px;">
+            </h1>
+       
+        </div>
+    </body>
+</html>

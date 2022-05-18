@@ -93,7 +93,7 @@
             if($check == 0){ 
                 print('
                 <h1 style="font-size: 28px; position: absolute; bottom: 10px; right: 30px;">
-                <input id="send" name="send" type="button" value="完成送餐" class="btn" onclick="done('.$row[4].')" style="margin-left: 32px;">
+                <input id="send" name="send" type="button" value="已送餐" class="btn" onclick="done('.$row[4].')" style="margin-left: 32px;">
                 </h1>
                 ');
             }else

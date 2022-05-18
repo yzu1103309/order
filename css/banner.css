@@ -20,3 +20,6 @@
     font-weight: bold;
     cursor:url(../pics/pointer.png),auto;
 }
+#titleText{
+    margin-top: 0px;
+}

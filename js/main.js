@@ -184,13 +184,14 @@ function historyPage(){
     });
 }
 
-function history(type){
+function history(type, page){
     $.ajax({
         url: "php/history.php",
         type: "POST",
         datatype: "html",
         data: {
-            type: type
+            type: type,
+            page: page
         },
         success: function( output ) {
             $("#historyA").html(output);
@@ -241,7 +242,7 @@ function remove(auto,type){
                 $("#detailB").css("display","none");
                 $("#content").css({"filter": "blur(0px)","-webkit-filter": "blur(0px)","pointer-events": "initial"});
                 historyPage();
-                history(type);
+                history(type,1);
             },
             error : function(){
                 alert( "Error:暫時無法刪除" );
@@ -251,7 +252,8 @@ function remove(auto,type){
 }
 
 function removeAll(){
-    var result = confirm("您確定要刪除「所有」紀錄（包括收入）嗎？\n注意：這項操作無法復原！");
+    /**/
+    var result = confirm("！！！！！！！！「期末專題測試提醒」：除非已測試完所有歷史查詢的功能，否則不要進行此操作！！！！！！！！\n\n您確定要刪除「所有」紀錄（包括收入）嗎？\n注意：這項操作無法復原！");
     if(result == 1){
         $.ajax({
             url: "php/removeAll.php",
