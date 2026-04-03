@@ -1,6 +1,6 @@
+var itemCount = items.length;
 var originD = Array(itemCount).fill(0);
 var dish = Array(itemCount).fill(0);
-var itemCount = items.length;
 var btn = '<input id="confirm" name="confirm" type="button" value="確認送單" class="btn" onclick="sendConfirm()" style="float: right; margin-right: 20px;">';
 var total = 0;
 
@@ -114,4 +114,30 @@ function send(){
         alert( "未成功送出訂單，請重試。" );
         }
     });
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        r,
+        decr,
+        refresh,
+        clear,
+        sendConfirm,
+        back,
+        send,
+        getState: function () {
+            return {
+                originD: originD,
+                dish: dish,
+                itemCount: itemCount,
+                total: total
+            };
+        },
+        setState: function (s) {
+            if (s.originD) originD = s.originD;
+            if (s.dish) dish = s.dish;
+            if (s.itemCount !== undefined) itemCount = s.itemCount;
+            if (s.total !== undefined) total = s.total;
+        }
+    };
 }
