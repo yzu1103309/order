@@ -1,0 +1,25 @@
+{
+  "name": "order",
+  "version": "1.0.0",
+  "description": "> ### 此作品為個人於110下學期完整籌劃並製作，作為網站設計期末專題 -- [完整Source Code](https://github.com/yzu1103309/order)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yzu1103309/order.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/yzu1103309/order/issues"
+  },
+  "homepage": "https://github.com/yzu1103309/order#readme",
+  "devDependencies": {
+    "jest": "^30.3.0"
+  }
+}

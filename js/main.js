@@ -269,3 +269,41 @@ function removeAll(){
         });
     }
 }
+
+/* istanbul ignore next */
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        orderPage,
+        dineIn,
+        toGo,
+        showMenu,
+        takePage,
+        deliverPage,
+        autoRefresh01,
+        autoRefresh02,
+        complete,
+        done,
+        historyPage,
+        history,
+        view,
+        back02,
+        remove,
+        removeAll,
+        getState: function () {
+            return {
+                Count1: Count1,
+                Count2: Count2,
+                interval01: interval01,
+                interval02: interval02,
+                notify1: notify1,
+                notify2: notify2
+            };
+        },
+        setState: function (state) {
+            if (state.Count1 !== undefined) Count1 = state.Count1;
+            if (state.Count2 !== undefined) Count2 = state.Count2;
+            if (state.interval01 !== undefined) interval01 = state.interval01;
+            if (state.interval02 !== undefined) interval02 = state.interval02;
+        }
+    };
+}
