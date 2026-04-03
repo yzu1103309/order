@@ -1,0 +1,32 @@
+name: Test Env Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, testing-server]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to ~/public_html
+        shell: bash
+        run: |
+          set -e
+
+          TARGET_DIR="$HOME/public_html/order"
+
+          mkdir -p "$TARGET_DIR"
+
+          rsync -av --delete \
+            --exclude=".git" \
+            --exclude=".github" \
+            --exclude="js/custom_settings.js"
+            ./ "$TARGET_DIR"/
+
+      - name: Show deployed commit
+        run: echo "Deployed commit ${GITHUB_SHA} to $HOME/public_html"
