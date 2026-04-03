@@ -101,3 +101,10 @@ function draw(){
         });
     }
 }
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        searchYear,
+        draw
+    };
+}
