@@ -24,5 +24,15 @@ const soundFileName1/*<接單頁面>新訂單通知音效*/ = "notify2.mp3";
 const soundFileName2/*<送餐頁面>新訂單通知音效*/ = "notify3.mp3";
 
 
-
-
+/* istanbul ignore next */
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        items,
+        price,
+        typeCount,
+        eachTypeCount,
+        tableCount,
+        soundFileName1,
+        soundFileName2
+    };
+}
