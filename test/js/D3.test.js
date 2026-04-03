@@ -78,7 +78,7 @@ global.d3 = {
     })
 };
 
-const { searchYear, draw } = require('../js/D3');
+const { searchYear, draw } = require('../../js/D3');
 
 describe('D3.js unit tests', () => {
     beforeEach(() => {

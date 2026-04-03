@@ -36,7 +36,7 @@ global.document = {
 global.alert = jest.fn();
 global.orderPage = jest.fn();
 
-const order = require('../js/order');
+const order = require('../../js/order');
 
 describe('order.js unit tests', () => {
     beforeEach(() => {
