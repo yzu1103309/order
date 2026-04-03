@@ -1,12 +1,16 @@
 name: Test Env Deployment
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+      workflows: ["Code Quality Check"]
+      types:
+        - completed
+      branches:
+        - main
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: [self-hosted, linux, testing-server]
 
     steps:
