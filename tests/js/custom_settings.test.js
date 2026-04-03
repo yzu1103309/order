@@ -1,4 +1,4 @@
-const settings = require('../js/custom_settings.js');
+const settings = require('../../js/custom_settings.js');
 
 describe('custom_settings.js with coverage support', () => {
     test('items should contain 18 menu items', () => {

@@ -58,7 +58,7 @@ function loadMainModule() {
 
     global.$.ajax = jest.fn();
 
-    const main = require(path.join(__dirname, '../js/main.js'));
+    const main = require(path.join(__dirname, '../../js/main.js'));
 
     return {
         main,
