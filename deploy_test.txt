@@ -1,0 +1,2 @@
+If this see this file on testing server,
+that means the deployment workflow had been executed sucessfully
