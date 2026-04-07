@@ -2,32 +2,40 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../php/done_testable.php';
+require_once __DIR__ . '/../../php/queries/done_queries.php';
 
 class DoneTest extends TestCase
 {
-    public function testBuildDoneQueriesWhenRowsStillRemain(): void
+    public function testBuildDeleteDeliverByAutoQuery(): void
     {
-        $expected = [
+        $this->assertSame(
             "DELETE FROM `Delivers` WHERE `Auto`= 5;",
-            "SELECT * FROM `Delivers`"
-        ];
-
-        $actual = buildDoneQueries(5, true);
-
-        $this->assertSame($expected, $actual);
+            buildDeleteDeliverByAutoQuery(5)
+        );
     }
 
-    public function testBuildDoneQueriesWhenNoRowsRemain(): void
+    public function testBuildSelectAllDeliversQuery(): void
+    {
+        $this->assertSame(
+            "SELECT * FROM `Delivers`",
+            buildSelectAllDeliversQuery()
+        );
+    }
+
+    public function testBuildDonePostDeleteQueriesWhenNoRemainingDelivers(): void
     {
         $expected = [
-            "DELETE FROM `Delivers` WHERE `Auto`= 5;",
-            "SELECT * FROM `Delivers`",
             "ALTER TABLE `Delivers` AUTO_INCREMENT=1"
         ];
 
-        $actual = buildDoneQueries(5, false);
+        $this->assertSame($expected, buildDonePostDeleteQueries(false));
+        $this->assertSame($expected, buildDonePostDeleteQueries(null));
+    }
 
-        $this->assertSame($expected, $actual);
+    public function testBuildDonePostDeleteQueriesWhenDeliversStillRemain(): void
+    {
+        $remainingRow = [2, '15', '1,0,1', 120, 8];
+
+        $this->assertSame([], buildDonePostDeleteQueries($remainingRow));
     }
 }

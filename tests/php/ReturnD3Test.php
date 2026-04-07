@@ -2,108 +2,69 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../php/returnD3_testable.php';
+require_once __DIR__ . '/../../php/renderers/return_d3_renderer.php';
 
 class ReturnD3Test extends TestCase
 {
-    public function testBuildReturnD3OutputWithData(): void
+    public function testBuildReturnD3SelectQuery(): void
     {
-        $year = '2024';
-
-        $rows = [
-            ['A', 1, 'item1', 100, 'N', '2024-01-10'],
-            ['B', 1, 'item2', 200, 'N', '2024-01-20'],
-            ['C', 1, 'item3', 300, 'N', '2024-02-15'],
-            ['D', 1, 'item4', 400, 'N', '2024-12-25'],
-            ['E', 1, 'item5', 999, 'N', '2023-05-01'],
-        ];
-
-        $expected = <<<CSV
-year,value
-01月,300
-02月,300
-03月,0
-04月,0
-05月,0
-06月,0
-07月,0
-08月,0
-09月,0
-10月,0
-11月,0
-12月,400
-
-CSV;
-
-        $actual = buildReturnD3Output($year, $rows);
-
         $this->assertSame(
-            str_replace("\r\n", "\n", $expected),
-            str_replace("\r\n", "\n", $actual)
+            "SELECT * FROM `History` WHERE Date LIKE '2026%'",
+            buildReturnD3SelectQuery('2026')
         );
     }
 
-    public function testBuildReturnD3OutputWithoutData(): void
+    public function testCreateMonthlyIncomeArray(): void
     {
-        $year = '2025';
-
-        $rows = [
-            ['A', 1, 'item1', 100, 'N', '2024-01-10'],
-            ['B', 1, 'item2', 200, 'N', '2024-02-20'],
-        ];
-
-        $expected = <<<CSV
-year,value
-01月,0
-02月,0
-03月,0
-04月,0
-05月,0
-06月,0
-07月,0
-08月,0
-09月,0
-10月,0
-11月,0
-12月,0
-
-CSV;
-
-        $actual = buildReturnD3Output($year, $rows);
-
-        $this->assertSame(
-            str_replace("\r\n", "\n", $expected),
-            str_replace("\r\n", "\n", $actual)
-        );
+        $expected = ['', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        $this->assertSame($expected, createMonthlyIncomeArray());
     }
 
-    public function testCalculateMonthlyIncomeAccumulatesSameMonth(): void
+    public function testExtractMonthIndex(): void
     {
-        $year = '2024';
-
-        $rows = [
-            ['A', 1, 'item1', 50, 'N', '2024-03-01'],
-            ['B', 1, 'item2', 70, 'N', '2024-03-18'],
-            ['C', 1, 'item3', 30, 'N', '2024-03-25'],
-        ];
-
-        $income = calculateMonthlyIncome($year, $rows);
-
-        $this->assertSame(150, $income[3]);
+        $this->assertSame(1, extractMonthIndex('2026', '2026-01-15'));
+        $this->assertSame(12, extractMonthIndex('2026', '2026-12-31'));
     }
 
-    public function testCalculateMonthlyIncomeSkipsIncompleteRows(): void
+    public function testAddIncomeToMonth(): void
     {
-        $year = '2024';
+        $income = createMonthlyIncomeArray();
+        $income = addIncomeToMonth($income, 3, 120);
+        $income = addIncomeToMonth($income, 3, 80);
 
-        $rows = [
-            ['A', 1, 'item1', 100, 'N', '2024-01-10'],
-            ['B', 1, 'item2'],
-            ['C', 1, 'item3', 50, 'N', '2024-01-20'],
-        ];
+        $this->assertSame(200, $income[3]);
+    }
 
-        $income = calculateMonthlyIncome($year, $rows);
+    public function testBuildMonthLabel(): void
+    {
+        $this->assertSame('01月', buildMonthLabel(1));
+        $this->assertSame('09月', buildMonthLabel(9));
+        $this->assertSame('10月', buildMonthLabel(10));
+        $this->assertSame('12月', buildMonthLabel(12));
+    }
 
-        $this->assertSame(150, $income[1]);
+    public function testBuildReturnD3Csv(): void
+    {
+        $income = createMonthlyIncomeArray();
+        $income[1] = 10320;
+        $income[2] = 20975;
+        $income[12] = 42390;
+
+        $expected =
+            "year,value\n" .
+            "01月,10320\n" .
+            "02月,20975\n" .
+            "03月,0\n" .
+            "04月,0\n" .
+            "05月,0\n" .
+            "06月,0\n" .
+            "07月,0\n" .
+            "08月,0\n" .
+            "09月,0\n" .
+            "10月,0\n" .
+            "11月,0\n" .
+            "12月,42390\n";
+
+        $this->assertSame($expected, buildReturnD3Csv($income));
     }
 }

@@ -2,65 +2,61 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../php/searchYear_testable.php';
+require_once __DIR__ . '/../../php/renderers/search_year_renderer.php';
 
 class SearchYearTest extends TestCase
 {
-    public function testExtractYearsReturnsDifferentAdjacentYears(): void
+    public function testBuildSearchYearSelectQuery(): void
     {
-        $rows = [
-            ['A', 1, 'item1', 100, 'N', '2022-01-10'],
-            ['B', 1, 'item2', 200, 'N', '2022-03-15'],
-            ['C', 1, 'item3', 300, 'N', '2023-05-20'],
-            ['D', 1, 'item4', 400, 'N', '2023-08-01'],
-            ['E', 1, 'item5', 500, 'N', '2024-12-25'],
-        ];
-
-        $years = extractYears($rows);
-
-        $this->assertSame(['2022', '2023', '2024'], $years);
+        $this->assertSame(
+            "SELECT * FROM `History`",
+            buildSearchYearSelectQuery()
+        );
     }
 
-    public function testExtractYearsSkipsIncompleteRows(): void
+    public function testExtractYearFromDate(): void
     {
-        $rows = [
-            ['A', 1, 'item1', 100, 'N', '2022-01-10'],
-            ['B', 1, 'item2'],
-            ['C', 1, 'item3', 300, 'N', '2023-05-20'],
-        ];
-
-        $years = extractYears($rows);
-
-        $this->assertSame(['2022', '2023'], $years);
+        $this->assertSame('2026', extractYearFromDate('2026-04-08'));
+        $this->assertSame('2025', extractYearFromDate('2025-12-31'));
     }
 
-    public function testBuildSearchYearOutputContainsOptions(): void
+    public function testShouldAppendYear(): void
     {
-        $rows = [
-            ['A', 1, 'item1', 100, 'N', '2022-01-10'],
-            ['B', 1, 'item2', 200, 'N', '2023-03-15'],
-            ['C', 1, 'item3', 300, 'N', '2024-06-20'],
-        ];
-
-        $output = buildSearchYearOutput($rows);
-
-        $this->assertStringContainsString('<option value="2022">2022</option>', $output);
-        $this->assertStringContainsString('<option value="2023">2023</option>', $output);
-        $this->assertStringContainsString('<option value="2024">2024</option>', $output);
-        $this->assertStringContainsString('提示：請於上方選取可查詢之年份', $output);
+        $this->assertTrue(shouldAppendYear('2026', 0));
+        $this->assertTrue(shouldAppendYear('2025', '2026'));
+        $this->assertFalse(shouldAppendYear('2026', '2026'));
     }
 
-    public function testBuildSearchYearOutputWithNoValidYearStillShowsBaseHtml(): void
+    public function testCollectUniqueYears(): void
     {
         $rows = [
-            ['A', 1, 'item1'],
-            ['B', 1, 'item2'],
+            [1, '1桌', '1,0', 100, 1, '2026-04-08', '10:00'],
+            [1, '2桌', '1,0', 100, 2, '2026-03-01', '09:00'],
+            [2, '15', '1,0', 100, 3, '2025-12-31', '18:00'],
+            [2, '16', '1,0', 100, 4, '2025-01-01', '12:00'],
+            [1, '3桌', '1,0', 100, 5, '2024-11-11', '08:00'],
         ];
 
-        $output = buildSearchYearOutput($rows);
+        $this->assertSame(['2026', '2025', '2024'], collectUniqueYears($rows));
+    }
 
-        $this->assertStringContainsString('<div id="selector">', $output);
-        $this->assertStringContainsString('<option value="" disabled="" selected="">請選擇</option>', $output);
-        $this->assertStringNotContainsString('<option value="2022">2022</option>', $output);
+    public function testBuildYearOptionsHtml(): void
+    {
+        $html = buildYearOptionsHtml(['2026', '2025']);
+
+        $this->assertStringContainsString('<option value="2026">2026</option>', $html);
+        $this->assertStringContainsString('<option value="2025">2025</option>', $html);
+    }
+
+    public function testBuildSearchYearHtml(): void
+    {
+        $html = buildSearchYearHtml(['2026', '2025']);
+
+        $this->assertStringContainsString('回上一頁', $html);
+        $this->assertStringContainsString('請選擇', $html);
+        $this->assertStringContainsString('<option value="2026">2026</option>', $html);
+        $this->assertStringContainsString('<option value="2025">2025</option>', $html);
+        $this->assertStringContainsString('onclick="draw()"', $html);
+        $this->assertStringContainsString('提示：請於上方選取可查詢之年份', $html);
     }
 }

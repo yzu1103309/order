@@ -2,80 +2,75 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../php/showMenu_testable.php';
+require_once __DIR__ . '/../../php/renderers/show_menu_renderer.php';
 
 class ShowMenuTest extends TestCase
 {
-    public function testBuildShowMenuOutputWithTwoTypes(): void
+    public function testCalculateShowMenuStartPosition(): void
     {
-        $items = [
-            '紅燒牛肉麵',
-            '清燉牛肉麵',
-            '牛肉湯餃',
-            '餛飩麵',
-            '榨菜肉絲麵',
-            '滷肉飯（大）',
-            '滷肉飯（小）',
-            '爌肉飯',
-            '爌肉飯便當'
-        ];
+        $eachCount = [5, 4, 3];
 
+        $this->assertSame(0, calculateShowMenuStartPosition(0, $eachCount));
+        $this->assertSame(5, calculateShowMenuStartPosition(1, $eachCount));
+        $this->assertSame(9, calculateShowMenuStartPosition(2, $eachCount));
+    }
+
+    public function testSliceShowMenuSectionItems(): void
+    {
+        $items = ['牛肉麵', '湯餃', '餛飩麵', '滷肉飯', '爌肉飯'];
+
+        $this->assertSame(
+            ['餛飩麵', '滷肉飯'],
+            sliceShowMenuSectionItems($items, 2, 2)
+        );
+    }
+
+    public function testBuildShowMenuBoxHtml(): void
+    {
+        $this->assertSame(
+            '<div class="box" onclick="r(3)">餛飩麵</div>',
+            buildShowMenuBoxHtml(3, '餛飩麵')
+        );
+    }
+
+    public function testBuildShowMenuSectionHtml(): void
+    {
+        $actual = buildShowMenuSectionHtml(['牛肉麵', '湯餃'], 0);
+
+        $expected =
+            '<div id="section">' .
+            '<div class="box" onclick="r(0)">牛肉麵</div>' .
+            '<div class="box" onclick="r(1)">湯餃</div>' .
+            '</div>';
+
+        $this->assertSame($expected, $actual);
+    }
+
+    public function testBuildShowMenuSectionsHtml(): void
+    {
+        $items = ['紅燒牛肉麵', '清燉牛肉麵', '牛肉湯餃', '餛飩麵', '滷肉飯', '爌肉飯'];
         $typeCount = 2;
-        $eachCount = [5, 4];
+        $eachCount = [4, 2];
 
-        $output = buildShowMenuOutput($items, $typeCount, $eachCount);
+        $actual = buildShowMenuSectionsHtml($items, $typeCount, $eachCount);
 
-        $expected = '<div id="section">'
-            . '<div class="box" onclick="r(0)">紅燒牛肉麵</div>'
-            . '<div class="box" onclick="r(1)">清燉牛肉麵</div>'
-            . '<div class="box" onclick="r(2)">牛肉湯餃</div>'
-            . '<div class="box" onclick="r(3)">餛飩麵</div>'
-            . '<div class="box" onclick="r(4)">榨菜肉絲麵</div>'
-            . '</div>'
-            . '<div id="section">'
-            . '<div class="box" onclick="r(5)">滷肉飯（大）</div>'
-            . '<div class="box" onclick="r(6)">滷肉飯（小）</div>'
-            . '<div class="box" onclick="r(7)">爌肉飯</div>'
-            . '<div class="box" onclick="r(8)">爌肉飯便當</div>'
-            . '</div>';
+        $expected =
+            '<div id="section">' .
+            '<div class="box" onclick="r(0)">紅燒牛肉麵</div>' .
+            '<div class="box" onclick="r(1)">清燉牛肉麵</div>' .
+            '<div class="box" onclick="r(2)">牛肉湯餃</div>' .
+            '<div class="box" onclick="r(3)">餛飩麵</div>' .
+            '</div>' .
+            '<div id="section">' .
+            '<div class="box" onclick="r(4)">滷肉飯</div>' .
+            '<div class="box" onclick="r(5)">爌肉飯</div>' .
+            '</div>';
 
-        $this->assertSame($expected, $output);
+        $this->assertSame($expected, $actual);
     }
 
-    public function testBuildShowMenuOutputWithSingleType(): void
+    public function testBuildShowMenuSectionsHtmlWithZeroTypeCount(): void
     {
-        $items = ['紅茶', '奶茶', '綠茶'];
-        $typeCount = 1;
-        $eachCount = [3];
-
-        $output = buildShowMenuOutput($items, $typeCount, $eachCount);
-
-        $this->assertStringContainsString('<div class="box" onclick="r(0)">紅茶</div>', $output);
-        $this->assertStringContainsString('<div class="box" onclick="r(1)">奶茶</div>', $output);
-        $this->assertStringContainsString('<div class="box" onclick="r(2)">綠茶</div>', $output);
-    }
-
-    public function testBuildShowMenuOutputWithNoTypes(): void
-    {
-        $items = [];
-        $typeCount = 0;
-        $eachCount = [];
-
-        $output = buildShowMenuOutput($items, $typeCount, $eachCount);
-
-        $this->assertSame('', $output);
-    }
-
-    public function testBuildShowMenuOutputStartsSecondTypeAtCorrectIndex(): void
-    {
-        $items = ['A', 'B', 'C', 'D', 'E'];
-        $typeCount = 2;
-        $eachCount = [2, 3];
-
-        $output = buildShowMenuOutput($items, $typeCount, $eachCount);
-
-        $this->assertStringContainsString('<div class="box" onclick="r(2)">C</div>', $output);
-        $this->assertStringContainsString('<div class="box" onclick="r(3)">D</div>', $output);
-        $this->assertStringContainsString('<div class="box" onclick="r(4)">E</div>', $output);
+        $this->assertSame('', buildShowMenuSectionsHtml(['A', 'B'], 0, [1, 1]));
     }
 }

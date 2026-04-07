@@ -2,100 +2,40 @@
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../../php/remove_testable.php';
+require_once __DIR__ . '/../../php/queries/remove_queries.php';
 
 class RemoveTest extends TestCase
 {
-    public function testRemoveHistoryByAutoRemovesMatchingRow(): void
+    public function testBuildDeleteHistoryByAutoQuery(): void
     {
-        $rows = [
-            ['A', 1, 'item1', 100, 1, '2024-01-10'],
-            ['B', 1, 'item2', 200, 2, '2024-01-11'],
-            ['C', 1, 'item3', 300, 3, '2024-01-12'],
-        ];
+        $this->assertSame(
+            "DELETE FROM `History` WHERE Auto=12",
+            buildDeleteHistoryByAutoQuery(12)
+        );
+    }
 
-        $result = removeHistoryByAuto($rows, 2);
+    public function testBuildSelectAllHistoryQuery(): void
+    {
+        $this->assertSame(
+            "SELECT * FROM `History`",
+            buildSelectAllHistoryQuery()
+        );
+    }
 
+    public function testBuildRemovePostDeleteQueriesWhenNoRemainingHistory(): void
+    {
         $expected = [
-            ['A', 1, 'item1', 100, 1, '2024-01-10'],
-            ['C', 1, 'item3', 300, 3, '2024-01-12'],
+            "ALTER TABLE `History` AUTO_INCREMENT=1"
         ];
 
-        $this->assertSame($expected, $result);
+        $this->assertSame($expected, buildRemovePostDeleteQueries(false));
+        $this->assertSame($expected, buildRemovePostDeleteQueries(null));
     }
 
-    public function testRemoveHistoryByAutoKeepsAllRowsWhenAutoNotFound(): void
+    public function testBuildRemovePostDeleteQueriesWhenHistoryStillRemains(): void
     {
-        $rows = [
-            ['A', 1, 'item1', 100, 1, '2024-01-10'],
-            ['B', 1, 'item2', 200, 2, '2024-01-11'],
-        ];
+        $remainingRow = [2, '15', '1,0,1', 120, 8, '2026-04-08', '20:00:00'];
 
-        $result = removeHistoryByAuto($rows, 99);
-
-        $this->assertSame($rows, $result);
-    }
-
-    public function testShouldResetAutoIncrementReturnsTrueWhenNoRowsRemain(): void
-    {
-        $rows = [];
-
-        $this->assertTrue(shouldResetAutoIncrement($rows));
-    }
-
-    public function testShouldResetAutoIncrementReturnsFalseWhenRowsRemain(): void
-    {
-        $rows = [
-            ['A', 1, 'item1', 100, 1, '2024-01-10'],
-        ];
-
-        $this->assertFalse(shouldResetAutoIncrement($rows));
-    }
-
-    public function testSimulateRemoveResetsAutoIncrementWhenLastRowRemoved(): void
-    {
-        $rows = [
-            ['A', 1, 'item1', 100, 7, '2024-01-10'],
-        ];
-
-        $result = simulateRemove($rows, 7);
-
-        $this->assertSame([], $result['rows']);
-        $this->assertTrue($result['reset_auto_increment']);
-    }
-
-    public function testSimulateRemoveDoesNotResetAutoIncrementWhenRowsStillRemain(): void
-    {
-        $rows = [
-            ['A', 1, 'item1', 100, 7, '2024-01-10'],
-            ['B', 1, 'item2', 200, 8, '2024-01-11'],
-        ];
-
-        $result = simulateRemove($rows, 7);
-
-        $expectedRows = [
-            ['B', 1, 'item2', 200, 8, '2024-01-11'],
-        ];
-
-        $this->assertSame($expectedRows, $result['rows']);
-        $this->assertFalse($result['reset_auto_increment']);
-    }
-
-    public function testRemoveHistoryByAutoKeepsIncompleteRows(): void
-    {
-        $rows = [
-            ['A', 1, 'item1', 100, 1, '2024-01-10'],
-            ['broken row'],
-            ['B', 1, 'item2', 200, 2, '2024-01-11'],
-        ];
-
-        $result = removeHistoryByAuto($rows, 1);
-
-        $expected = [
-            ['broken row'],
-            ['B', 1, 'item2', 200, 2, '2024-01-11'],
-        ];
-
-        $this->assertSame($expected, $result);
+        $this->assertSame([], buildRemovePostDeleteQueries($remainingRow));
     }
 }
