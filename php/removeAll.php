@@ -1,12 +1,15 @@
 <?php
-    $conn = new mysqli('localhost','user','12345','order');
+require_once __DIR__ . '/queries/remove_all_queries.php';
 
-    if($conn->connect_error){
-        die('Connection Failed : '.$conn->connect_error);
-    }else{
-        $sql = 'DELETE FROM `History` WHERE 1';
-        mysqli_query($conn,$sql);
-        $sql = 'ALTER TABLE `History` AUTO_INCREMENT=1';
+$conn = new mysqli('localhost','user','12345','order');
+
+if($conn->connect_error){
+    die('Connection Failed : '.$conn->connect_error);
+}else{
+    $queries = buildRemoveAllHistoryQueries();
+
+    foreach ($queries as $sql) {
         mysqli_query($conn,$sql);
     }
+}
 ?>

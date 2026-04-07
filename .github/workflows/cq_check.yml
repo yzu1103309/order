@@ -18,11 +18,28 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: xdebug, mysqli
+          coverage: xdebug
 
-      - name: Run tests
+      - name: Install dependencies
+        run: |
+          npm install
+          composer install --no-interaction --prefer-dist
+
+      - name: Run Node tests
         run: npm run test
 
-      - name: Run coverage
+      - name: Run Node coverage
         run: npm run coverage
+
+      - name: Run PHPUnit coverage
+        run: |
+          php -d xdebug.mode=coverage ./vendor/bin/phpunit \
+            --coverage-text \
+            --coverage-filter php/renderers \
+            --coverage-filter php/queries \
+            tests/php
