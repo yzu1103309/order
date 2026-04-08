@@ -30,7 +30,7 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
-          $jenkinsUrl = "http://127.0.0.1:8080"
+          $jenkinsUrl = "http://127.0.0.1:8080/jenkins"
           $jobName = $env:JENKINS_JOB_NAME
 
           if ([string]::IsNullOrWhiteSpace($env:JENKINS_USER)) {
