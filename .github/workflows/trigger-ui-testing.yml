@@ -1,0 +1,78 @@
+name: Trigger Jenkins UI Testing
+
+on:
+  workflow_run:
+    workflows: ["Test Env Deployment"]
+    types:
+      - completed
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  trigger-jenkins:
+    name: Trigger Jenkins on localhost
+    if: >
+      ${{
+        github.event_name == 'workflow_dispatch' ||
+        github.event.workflow_run.conclusion == 'success'
+      }}
+    runs-on: [self-hosted, ui-testing-agent]
+
+    steps:
+      - name: Trigger Jenkins job
+        shell: powershell
+        env:
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
+          JENKINS_JOB_NAME: Automated-UI-Testing
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $jenkinsUrl = "http://127.0.0.1:8080"
+          $jobName = $env:JENKINS_JOB_NAME
+
+          if ([string]::IsNullOrWhiteSpace($env:JENKINS_USER)) {
+            throw "Missing secret: JENKINS_USER"
+          }
+
+          if ([string]::IsNullOrWhiteSpace($env:JENKINS_API_TOKEN)) {
+            throw "Missing secret: JENKINS_API_TOKEN"
+          }
+
+          $pair = "$($env:JENKINS_USER):$($env:JENKINS_API_TOKEN)"
+          $bytes = [System.Text.Encoding]::ASCII.GetBytes($pair)
+          $basicAuth = [Convert]::ToBase64String($bytes)
+
+          $headers = @{
+            Authorization = "Basic $basicAuth"
+          }
+
+          # 先確認 Jenkins 可連線
+          try {
+            $ping = Invoke-WebRequest `
+              -Uri "$jenkinsUrl/login" `
+              -Headers $headers `
+              -Method GET `
+              -UseBasicParsing
+            Write-Host "Jenkins reachable: HTTP $($ping.StatusCode)"
+          } catch {
+            throw "Cannot reach Jenkins at $jenkinsUrl. $_"
+          }
+
+          # 直接觸發 Jenkins job
+          $buildUrl = "$jenkinsUrl/job/$jobName/build"
+
+          try {
+            $resp = Invoke-WebRequest `
+              -Uri $buildUrl `
+              -Headers $headers `
+              -Method POST `
+              -UseBasicParsing
+
+            Write-Host "Jenkins job trigger request sent."
+            Write-Host "HTTP status: $($resp.StatusCode)"
+          } catch {
+            throw "Failed to trigger Jenkins job '$jobName'. $_"
+          }
