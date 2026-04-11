@@ -38,4 +38,5 @@
 自動化架構：
 <img width="1280" height="720" alt="image2" src="https://github.com/user-attachments/assets/42ff0db5-b892-4a24-9818-147aad393984" />
 
+總系統架構：
 <img width="3120" height="3408" alt="diagram" src="https://github.com/user-attachments/assets/e25850a7-daea-45ac-9dd7-e77fe7b24746" />
